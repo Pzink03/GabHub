@@ -3,6 +3,7 @@ import { checkEmail, checkName, checkPassword, checkUsername } from "./validator
 import { Button } from "../../components/Button";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
+import { createUserAccount } from "../../lib/appwrite/api";
 
 function StateForm() {
     const [name, setName] = useState<string>("");
@@ -29,8 +30,20 @@ function StateForm() {
     return isAfterFirstSubmit ? checkUsername(username) : [];
   }, [isAfterFirstSubmit, username]);
 
-  function onSubmit(e: React.FormEvent) {
+async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    const userValues = {
+        name: name,
+        username: username,
+        email: email,
+        password: password
+    }
+
+    const newUser = await createUserAccount(userValues)
+
+    console.log(newUser)
+
     setIsAfterFirstSubmit(true);
     const nameResults = checkName(name)
     const usernameResults = checkUsername(username)
