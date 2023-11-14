@@ -3,12 +3,11 @@ import { checkEmail, checkName, checkPassword, checkUsername } from "./validator
 import { Button } from "../../components/Button";
 import Loading from "../../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserAccount } from "../../lib/appwrite/api";
 import { useCreateUserAccount, useSignInAccount } from "../../lib/react-query/queriesAndMutations";
 import { useUserContext } from "../../context/AuthContext";
 
 function StateForm() {
-    const { checkAuthUser, isLoading: isUserLoading } = useUserContext()
+    const { checkAuthUser } = useUserContext()
 
     const navigate = useNavigate()
 
@@ -19,7 +18,7 @@ function StateForm() {
     const [isAfterFirstSubmit, setIsAfterFirstSubmit] = useState<boolean>(false);
 
     const {mutateAsync: createUserAccount, isPending: isCreatingAccount} = useCreateUserAccount()
-    const {mutateAsync: signInAccount, isPending: isSigningIn} = useSignInAccount()
+    const {mutateAsync: signInAccount} = useSignInAccount()
 
   const emailErrors: string[] = useMemo(() => {
     return isAfterFirstSubmit ? checkEmail(email) : [];

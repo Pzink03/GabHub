@@ -1,4 +1,4 @@
-import { Link, NavLink, NavLinkProps, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from "./Button"
 import { useSignOutAccount } from "../lib/react-query/queriesAndMutations"
 import { useEffect } from 'react'

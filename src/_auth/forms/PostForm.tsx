@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Models } from "appwrite";
 import { useUserContext } from "../../context/AuthContext";
 import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations";
-import { updatePost } from "@/lib/appwrite/api";
 
 
 

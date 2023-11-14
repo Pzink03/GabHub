@@ -1,4 +1,4 @@
-import React from 'react'
+
 import PostForm from '../../_auth/forms/PostForm'
 
 const CreatePost = () => {
