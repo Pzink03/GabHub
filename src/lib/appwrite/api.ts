@@ -214,17 +214,20 @@ export async function deleteFile(fileId: string) {
 }
 
 export async function getRecentPosts() {
-    const posts = await databases.listDocuments(
+    try {
+      const posts = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.postCollectionId,
-        [Query.orderDesc('$createdAt'), Query.limit(20)]
-    )
+        [Query.orderDesc("$createdAt"), Query.limit(20)]
+      );
 
-    if(!posts) throw Error
+      if (!posts) throw Error;
 
-    return posts
-
-}
+      return posts;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
 export async function likePost(postId:string, likesArray: string[]) {
@@ -378,27 +381,35 @@ export async function deletePost(postId:string, imageId: string) {
 
 }
 
-export async function getInfinitePosts({ pageParam }: { pageParam: number}) {
-    const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(9)]
+export async function getInfinitePosts({
+    pageParam,
+  }: {
+    pageParam: number;
+  }) {
+    const queries: any[] = [
+      Query.orderDesc('$updatedAt'),
+      Query.limit(9),
+    ];
 
-    if(pageParam) {
-        queries.push(Query.cursorAfter(pageParam.toString()))
+    if (pageParam) {
+      queries.push(Query.cursorAfter(pageParam.toString()));
     }
 
     try {
-        const posts = await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.postCollectionId,
-            queries
-        )
+      const posts = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.postCollectionId,
+        queries
+      );
 
-        if(!posts) throw Error
-        return posts
-    } catch(error) {
-        console.log(error)
+      if (!posts) throw new Error('No data received.');
+
+      return posts; // Return the posts data here
+    } catch (error) {
+      console.error(error);
+      throw error; // Re-throw the error to handle it later
     }
-
-}
+  }
 
 export async function searchPosts(searchTerm: string) {
     try {
