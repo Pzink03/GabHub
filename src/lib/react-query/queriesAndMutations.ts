@@ -4,8 +4,19 @@ import {
     useQueryClient,
     useInfiniteQuery,
 } from '@tanstack/react-query'
-import { IUpdatePost, createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost } from '../appwrite/api'
+import { IUpdatePost, createPost, createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getInfinitePosts, getPostById, getRecentPosts, getUserById, likePost, savePost, searchPosts, signInAccount, signOutAccount, updatePost, updateProfile } from '../appwrite/api'
 import { QUERY_KEYS } from './queryKeys'
+
+export type IUpdateProfile = {
+    userId: string;
+    name: string;
+    bio: string;
+    username: string,
+    email: string,
+    imageId: string;
+    imageUrl: URL | string;
+    file: File[];
+  };
 
 type NewUserProps = {
     name: string
@@ -169,7 +180,7 @@ export const useGetPosts = () => {
     return useInfiniteQuery({
       queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
       queryFn: getInfinitePosts as any,
-      initialPageParam: 1,
+      initialPageParam: '',
       getNextPageParam: (lastPage: any) => {
         // If there's no data, there are no more pages.
         if (lastPage && lastPage.documents.length === 0) {
@@ -188,5 +199,30 @@ export const useSearchPosts = (searchTerm: string) => {
         queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
         queryFn: () => searchPosts(searchTerm),
         enabled: !!searchTerm
+    })
+}
+
+export const useGetUserById = (userId: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
+        queryFn: () => getUserById(userId),
+        enabled: !!userId
+    })
+}
+
+
+export const useUpdateProfile = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (user: IUpdateProfile) => updateProfile(user),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_CURRENT_USER]
+            }),
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_USER_BY_ID, data?.$id]
+            })
+
+        },
     })
 }
