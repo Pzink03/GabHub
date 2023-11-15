@@ -1,15 +1,15 @@
-import { Button } from "@/components/Button"
+
 import Loading from "@/components/Loading";
 import { useUserContext } from "@/context/AuthContext"
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { Link, useLocation, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 
 
 const Profile = () => {
   const { id } = useParams();
   const { user } = useUserContext();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   const { data: currentUser } = useGetUserById(id || "");
 

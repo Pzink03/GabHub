@@ -202,7 +202,7 @@ export const useSearchPosts = (searchTerm: string) => {
     })
 }
 
-export const useGetUserById = (userId: string) => {
+export const useGetUserById = (userId: string | '') => {
     return useQuery({
         queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
         queryFn: () => getUserById(userId),

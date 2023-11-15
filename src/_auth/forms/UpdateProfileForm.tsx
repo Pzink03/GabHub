@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import FileUploader from "../../components/FileUploader";
 import { Button } from "../../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
@@ -49,6 +48,11 @@ function UpdateProfileForm() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if(!currentUser) {
+        console.error("current user is undefined:")
+        return
+    }
 
 
       const updatedProfile = await updateProfile({
