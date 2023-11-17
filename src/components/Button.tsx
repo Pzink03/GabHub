@@ -6,10 +6,10 @@ export const buttonStyles = cva(["hover:bg-secondary-hover", "transition-colors"
     variants:{
         variant: {
             default: ["bg-secondary", "hover:bg-secondary-hover"],
-            ghost: ["hover:bg-gray-100"],
+            ghost: ["hover:bg-primary-700", "hover:border border-gray-500, focus:"],
             dark: [
-                "bg-secondary-dark",
-                "hover:bg-secondary-dark-hover",
+                "bg-zinc-700",
+                "hover:bg-gray-400",
                 'text-secondary',
             ]
         },

@@ -94,23 +94,35 @@ export async function signInAccount(user:{
 
 }
 
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+
+    return currentAccount;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getCurrentUser() {
-    try {
-        const currentAccount = await account.get()
+  try {
+    const currentAccount = await getAccount();
 
-        const currentUser = await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.userCollectionId,
-            [Query.equal('accountId', currentAccount.$id)]
-        )
+    if (!currentAccount) throw Error;
 
-        if(!currentAccount) return
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
 
-        return currentUser.documents[0]
+    if (!currentUser) throw Error;
 
-    } catch(error) {
-        console.log(error)
-    }
+    return currentUser.documents[0];
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 export async function signOutAccount() {

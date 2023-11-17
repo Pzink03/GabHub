@@ -5,7 +5,7 @@ import Bottombar from '../components/Bottombar'
 
 const RootLayout = () => {
   return (
-    <div className='w-full md:flex'>
+    <div className='w-full h-full md:flex'>
         <Navbar />
         <LeftSidebar />
 

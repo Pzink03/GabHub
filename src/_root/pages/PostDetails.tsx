@@ -15,6 +15,12 @@ const PostDetails = () => {
 
   }
 
+  if(!post) {
+    return (
+      <div>No posts</div>
+    )
+  }
+
   return (
     <div className="post_details-container">
       {isPending ? <Loading /> : (

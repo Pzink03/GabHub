@@ -46,6 +46,24 @@ async function onSubmit(e: React.FormEvent) {
         password: password
     }
 
+    console.log(userValues.email)
+    console.log(userValues.password)
+    // const nameErrors = checkName(userValues.name);
+    // const usernameErrors = checkUsername(userValues.username);
+    // const emailErrors = checkEmail(userValues.email);
+    // const passwordErrors = checkPassword(userValues.password);
+
+    if (
+      nameErrors.length > 0 ||
+      usernameErrors.length > 0 ||
+      emailErrors.length > 0 ||
+      passwordErrors.length > 0
+    ) {
+      // There are validation errors, set isAfterFirstSubmit to true
+      setIsAfterFirstSubmit(true);
+      return; // Do not proceed with the submission
+    }
+
     const newUser = await createUserAccount(userValues)
 
     if(!newUser) return
@@ -60,19 +78,6 @@ async function onSubmit(e: React.FormEvent) {
 
     if(!session) return
 
-
-
-    setIsAfterFirstSubmit(true);
-    const nameResults = checkName(name)
-    const usernameResults = checkUsername(username)
-    const emailResults = checkEmail(email);
-    const passwordResults = checkPassword(password);
-
-    if (emailResults.length === 0 && passwordResults.length === 0 && nameResults.length === 0 && usernameResults.length === 0 ) {
-      alert("Success");
-
-    }
-
     const isLoggedIn = await checkAuthUser()
 
     if(isLoggedIn) {
@@ -80,6 +85,7 @@ async function onSubmit(e: React.FormEvent) {
         setEmail('')
         setPassword('')
         setUsername('')
+        setIsAfterFirstSubmit(false);
 
         navigate('/')
     } else {
@@ -91,47 +97,47 @@ async function onSubmit(e: React.FormEvent) {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5 max-w-md">
         <div className="sm:w-420 flex-center flex-col">
-            <img src="/assets/images/logo.svg"  />
+            <img src="/assets/images/logo.svg" width={600} height={500}  />
             <h2 className="h3-bold sm:h2-bold pt-4 sm:pt-12">Create a new account</h2>
             <p className="text-light-3 small-medium md:base-regular">To use Social Circle please enter your account details</p>
         </div>
-        <div className={`flex flex-col gap-2  ${nameErrors.length > 0 ? "error" : ""}`}>
+        <div className={`form-group ${nameErrors.length > 0 ? "error" : ""}`}>
         <label className="font-bold" htmlFor="name">
         Name
         </label>
         <input
-          className="border-black rounded p-1 text-black"
+          className="input"
           type="name"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        {usernameErrors.length > 0 && (
-          <div className="msg">{usernameErrors.join(", ")}</div>
+        {nameErrors.length > 0 && (
+          <div className="msg">{nameErrors.join(", ")}</div>
         )}
       </div>
-        <div className={`flex flex-col gap-2  ${usernameErrors.length > 0 ? "error" : ""}`}>
+        <div className={`form-group  ${usernameErrors.length > 0 ? "error" : ""}`}>
         <label className="font-bold" htmlFor="username">
           Username
         </label>
         <input
-          className="border-black rounded p-1 text-black"
+          className="input"
           type="username"
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <p>*This is your publicly displayed name</p>
-        {emailErrors.length > 0 && (
-          <div className="msg">{emailErrors.join(", ")}</div>
+        {usernameErrors.length > 0 && (
+          <div className="msg">{usernameErrors.join(", ")}</div>
         )}
       </div>
-      <div className={`flex flex-col gap-2  ${emailErrors.length > 0 ? "error" : ""}`}>
+      <div className={`form-group  ${emailErrors.length > 0 ? "error" : ""}`}>
         <label className="font-bold" htmlFor="email">
           Email
         </label>
         <input
-          className="border-black rounded p-1 text-black"
+          className="input"
           type="email"
           id="email"
           value={email}
@@ -141,12 +147,12 @@ async function onSubmit(e: React.FormEvent) {
           <div className="msg">{emailErrors.join(", ")}</div>
         )}
       </div>
-      <div className={`flex flex-col gap-2 ${passwordErrors.length > 0 ? "error" : ""}`}>
+      <div className={`form-group ${passwordErrors.length > 0 ? "error" : ""}`}>
         <label className="font-bold" htmlFor="password">
           Password
         </label>
         <input
-          className="border-black rounded p-1 text-black"
+          className="input"
           type="password"
           id="password"
           value={password}
