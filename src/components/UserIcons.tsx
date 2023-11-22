@@ -1,25 +1,12 @@
-import { useGetUsers } from '@/lib/react-query/queriesAndMutations';
-import Loading from './Loading';
-import { useEffect, useState, useRef } from 'react';
-import { Button } from './Button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Models } from 'appwrite';
 
-const TRANSLATE_AMOUNT = 200;
+// const TRANSLATE_AMOUNT = 200;
 
 type UserProps = {
     user?: Models.Document
 }
 
 const UserIcons = ({user}: UserProps) => {
-  const { data: users, isPending: isLoading } = useGetUsers(10);
-  if (!users) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
 
   return (
 

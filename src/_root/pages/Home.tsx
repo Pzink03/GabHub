@@ -1,6 +1,5 @@
 import Loading from '@/components/Loading'
 import PostCard from '@/components/PostCard'
-import UserCard from '@/components/UserCard'
 import UserIcons from '@/components/UserIcons'
 // import UserIcons from '@/components/UserIcons'
 import { useGetRecentPosts, useGetUsers } from '@/lib/react-query/queriesAndMutations'
