@@ -11,7 +11,6 @@ type PostStatsProps = {
 
   const PostStats = ({ post, userId }: PostStatsProps) => {
     const location = useLocation();
-    console.log(post)
     const likesList = post.likes.map((user: Models.Document) => user.$id);
     const [likes, setLikes] = useState<string[]>(likesList);
 

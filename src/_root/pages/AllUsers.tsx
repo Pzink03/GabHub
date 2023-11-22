@@ -35,8 +35,8 @@ const AllUsers = () => {
             <h2 className='h3-bold md:h2=bold w-full'>Social Circle Users</h2>
             <div >
               <ul className='grid-container'>
-                {users?.documents.map(user => (
-                  <li key={user.$id} className='min-w-80 flex flex-col justify-center items-center gap-2 bg-dark-4 border-dark-4 rounded p-10'>
+                {users?.documents.map((user, index) => (
+                  <li key={index} className='min-w-80 flex flex-col justify-center items-center gap-2 bg-dark-4 border-dark-4 rounded p-10'>
                     <img
                     src={user.imageUrl}
                     className='h-20 w-20 rounded-full object-cover object-top'

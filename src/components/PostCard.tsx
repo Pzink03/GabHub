@@ -12,7 +12,6 @@ type PostCardProps = {
 
 const PostCard = ({ post }: PostCardProps) => {
     const { user } = useUserContext()
-    console.log(post)
     if(!post.creator) return
 
   return (
@@ -52,8 +51,8 @@ const PostCard = ({ post }: PostCardProps) => {
                     {post.caption}
                 </p>
                 <ul className='flex gap-1 mt-2'>
-                    {post.tags.map((tag: string) => (
-                        <li key={tag} className='text-light-3'>
+                    {post.tags.map((tag: string, index:string) => (
+                        <li key={index} className='text-light-3'>
                             #{tag}
                         </li>
                     ))}
