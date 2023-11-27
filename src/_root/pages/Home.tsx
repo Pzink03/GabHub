@@ -35,7 +35,8 @@ const Home = () => {
         <>
       <div className="home-container">
         <div className="top-user-container w-full">
-            <div className=" gap-1 px-4 w-full rounded-lg bg-dark-4">
+          {/* <h3 className='h3-bold md:h2-bold text-left w-full'>Other Social Circle users</h3> */}
+            <div className="w-full rounded-lg bg-dark-2 border-primary-500">
                 {isUserLoading && !creators ? (
                     <Loading />
                   ) : (
@@ -50,8 +51,11 @@ const Home = () => {
 
             </div>
         </div>
+        <div className='w-full'>
+            <hr className="line-break" />
+        </div>
             <div className="home-posts">
-              <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
+              <h2 className="h3-bold md:h2-bold text-center w-full">Home Feed</h2>
               {isPostLoading && !posts ? (
                 <Loading />
               ) : (

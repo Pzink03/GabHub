@@ -10,7 +10,6 @@ import { LikedPosts } from "@/_root/pages";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import Loading from "@/components/Loading";
-import { Button } from "@/components/Button";
 import GridPostList from "@/components/GridPostList";
 
 
@@ -32,6 +31,7 @@ const Profile = () => {
   const { pathname } = useLocation();
 
   const { data: currentUser } = useGetUserById(id || "");
+  console.log(currentUser)
 
   if (!currentUser)
     return (
@@ -49,7 +49,7 @@ const Profile = () => {
               currentUser.imageUrl || "/assets/icons/profile-placeholder.svg"
             }
             alt="profile"
-            className="w-28 h-28 lg:h-36 lg:w-36 rounded-full"
+            className="w-28 h-28 lg:h-36 lg:w-36 rounded-full object-cover"
           />
           <div className="flex flex-col flex-1 justify-between md:mt-2">
             <div className="flex flex-col w-full">
@@ -89,11 +89,6 @@ const Profile = () => {
                   Edit Profile
                 </p>
               </Link>
-            </div>
-            <div className={`${user.id === id && "hidden"}`}>
-              <Button type="button" className="shad-button_primary px-8">
-                Follow
-              </Button>
             </div>
           </div>
         </div>

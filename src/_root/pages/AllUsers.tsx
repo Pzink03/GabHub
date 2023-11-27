@@ -1,5 +1,6 @@
 import Loading from '@/components/Loading'
 import { useGetUsers } from '@/lib/react-query/queriesAndMutations'
+import { User } from "lucide-react";
 
 
 interface StabBlockProps {
@@ -31,8 +32,14 @@ const AllUsers = () => {
 
   return (
     <div className='explore-container'>
+        <div className="w-full md:px-20">
+        <div className="flex gap-2 justify-center items-center ">
+        <User width={36} height={36} />
+        <h2 className="h3-bold md:h2-bold md:w-full">Social Circle Users</h2>
+        </div>
+      <hr className="line-break" />
+      </div>
         <div className='explore-inner_container'>
-            <h2 className='h3-bold md:h2=bold w-full'>Social Circle Users</h2>
             <div >
               <ul className='grid-container'>
                 {users?.documents.map((user, index) => (
