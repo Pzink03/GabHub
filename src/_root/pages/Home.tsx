@@ -38,7 +38,9 @@ const Home = () => {
           {/* <h3 className='h3-bold md:h2-bold text-left w-full'>Other Social Circle users</h3> */}
             <div className="w-full rounded-lg bg-dark-2 border-primary-500">
                 {isUserLoading && !creators ? (
-                    <Loading />
+                  <div className='w-full h-full flex justify-center'>
+                    <Loading/>
+                    </div>
                   ) : (
                     <ul className="flex justify-between overflow-x-scroll custom-scrollbar">
                       {creators?.documents.map((creator) => (
@@ -70,9 +72,6 @@ const Home = () => {
             </div>
           </div>
           </>
-
       );
     };
-
-
 export default Home

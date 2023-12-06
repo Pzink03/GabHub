@@ -147,9 +147,12 @@ function UpdateProfileForm() {
         onChange={(e) => setEmail(e.target.value)}
       />
       <div className="flex gap-4 items-center justify-center">
-        <Button type="button" className="shad-button_dark_4">
-          Cancel
-        </Button>
+      <Button
+            type="button"
+            className="shad-button_dark_4"
+            onClick={() => navigate(-1)}>
+            Cancel
+          </Button>
         <Button className="shad-button_primary whitespace-nowrap" type="submit" disabled={isLoadingUpdate}>
           Submit{isLoadingUpdate && 'Loading...'}
         </Button>
