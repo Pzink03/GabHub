@@ -21,7 +21,9 @@ const PostDetails = () => {
 
   if(!post) {
     return (
-      <div>No posts</div>
+      <div className="h-full w-full flex justify-center items-center">
+        <Loading />
+      </div>
     )
   }
 
