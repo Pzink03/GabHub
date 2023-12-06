@@ -5,6 +5,7 @@ import SignupForm from './_auth/forms/SignupForm'
 import { AllUsers, CreatePost, EditPost, Explore, Home, PostDetails, Profile, Saved, UpdateProfile } from './_root/pages'
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
+import { Toaster } from './components/ui/toaster'
 
 export function App() {
     return (
@@ -29,6 +30,7 @@ export function App() {
                     <Route path='/update-profile/:id' element={<UpdateProfile/>} />
                 </Route>
         </Routes>
+        <Toaster />
       </main>
     )
   }
