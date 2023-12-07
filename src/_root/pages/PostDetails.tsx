@@ -1,6 +1,8 @@
-import { Button } from "@/components/Button"
+
 import Loading from "@/components/Loading"
 import PostStats from "@/components/PostStats"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import { useUserContext } from "@/context/AuthContext"
 import { useDeletePost, useGetPostById } from "@/lib/react-query/queriesAndMutations"
 import { multiFormatDateString } from "@/lib/utils"
@@ -66,19 +68,17 @@ const PostDetails = () => {
                   <Link to={`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && 'hidden'}`}>
                   <img src="/assets/icons/edit.svg" width={24} height={24} alt="edit" />
                   </Link>
-                  <Button onClick={handleDeletePost}
+                  <DeleteJobListingDialogue deleteUserPost={handleDeletePost} />
+
+
+                  {/* <Button onClick={handleDeletePost}
                   variant='ghost'
                   className={`ghost_details-delete-btn ${user.id !== post?.creator.$id && 'hidden'}`}
-                  >
-                    <img
-                    src="/assets/icons/delete.svg"
-                    alt="delete"
-                    width={24}
-                    height={24}
-                    />
+                  > */}
 
 
-                  </Button>
+
+                  {/* </Button> */}
                 </div>
 
             </div>
@@ -108,3 +108,39 @@ const PostDetails = () => {
 }
 
 export default PostDetails
+
+
+type deleteJobListingDialogueProps = {
+  deleteUserPost: () => void
+}
+
+function DeleteJobListingDialogue({ deleteUserPost }: deleteJobListingDialogueProps) {
+  return (
+  <AlertDialog >
+      <AlertDialogTrigger asChild>
+          <Button>
+          <img
+                    src="/assets/icons/delete.svg"
+                    alt="delete"
+                    width={24}
+                    height={24}
+                    />
+          </Button>
+      </AlertDialogTrigger>
+  <AlertDialogContent className="bg-dark-4 flex flex-col gap-10">
+      <AlertDialogHeader>
+          <AlertDialogTitle>
+          Are you sure you want to delete this post?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your post.
+          </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+          <AlertDialogCancel className="bg-primary-500 border-0 hover:bg-primary-600">Cancel</AlertDialogCancel>
+          <AlertDialogAction className="bg-primary-500 hover:bg-primary-600" onClick={deleteUserPost}>Confirm</AlertDialogAction>
+      </AlertDialogFooter>
+  </AlertDialogContent>
+  </AlertDialog>
+  )
+}
