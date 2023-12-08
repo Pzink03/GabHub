@@ -1,4 +1,3 @@
-
 import Loading from "@/components/Loading"
 import PostStats from "@/components/PostStats"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
@@ -9,10 +8,10 @@ import { multiFormatDateString } from "@/lib/utils"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 const PostDetails = () => {
-  const navigate = useNavigate()
   const { id } = useParams()
   const { data: post, isPending } = useGetPostById(id || '')
   const { user } = useUserContext()
+  const navigate = useNavigate()
 
   const {mutate: deletePost} = useDeletePost()
 
@@ -68,7 +67,7 @@ const PostDetails = () => {
                   <Link to={`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && 'hidden'}`}>
                   <img src="/assets/icons/edit.svg" width={24} height={24} alt="edit" />
                   </Link>
-                  <DeleteJobListingDialogue deleteUserPost={handleDeletePost} />
+                  <DeleteJobListingDialogue deleteUserPost={handleDeletePost}/>
 
 
                   {/* <Button onClick={handleDeletePost}
@@ -115,10 +114,13 @@ type deleteJobListingDialogueProps = {
 }
 
 function DeleteJobListingDialogue({ deleteUserPost }: deleteJobListingDialogueProps) {
+  const { id } = useParams()
+  const { data: post } = useGetPostById(id || '')
+  const { user } = useUserContext()
   return (
   <AlertDialog >
       <AlertDialogTrigger asChild>
-          <Button>
+          <Button className={`ghost_details-delete-btn ${user.id !== post?.creator.$id && 'hidden'}`}>
           <img
                     src="/assets/icons/delete.svg"
                     alt="delete"
