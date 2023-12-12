@@ -97,7 +97,7 @@ function UpdateProfileForm() {
   }
 
   return (
-      <form onSubmit={onSubmit} className="flex flex-col gap-9 w-full max-w-5xl">
+      <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full max-w-5xl">
         <ProfilePictureFileUploader
           fieldChange={(file) => setSelectedFile(file)}
           mediaUrl={selectedFile.length > 0 ? URL.createObjectURL(selectedFile[0]) : currentUser?.imageUrl}

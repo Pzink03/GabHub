@@ -26,7 +26,7 @@ const LikedPosts = () => {
       </p>
     )}
     <div>
-      <GridPostList posts={currentUser.liked} showUser={false} showStats={false}/>
+      <GridPostList posts={currentUser.liked} showUser={true} showStats={false}/>
     </div>
     </>
   )

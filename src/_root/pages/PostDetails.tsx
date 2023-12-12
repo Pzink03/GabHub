@@ -48,7 +48,7 @@ const PostDetails = () => {
 
 
                 <div className='flex flex-col'>
-                    <p className='base-medium lg:body-bold text-light-1'>
+                    <p className='base-medium lg:body-bold text-dark-1'>
                         {post?.creator.name}
                     </p>
                     <div className='flex-center gap-2 text-light-3'>
@@ -129,7 +129,7 @@ function DeleteJobListingDialogue({ deleteUserPost }: deleteJobListingDialoguePr
                     />
           </Button>
       </AlertDialogTrigger>
-  <AlertDialogContent className="bg-dark-4 flex flex-col gap-10">
+  <AlertDialogContent className="bg-light-1 flex flex-col gap-10 rounded">
       <AlertDialogHeader>
           <AlertDialogTitle>
           Are you sure you want to delete this post?
@@ -140,7 +140,7 @@ function DeleteJobListingDialogue({ deleteUserPost }: deleteJobListingDialoguePr
       </AlertDialogHeader>
       <AlertDialogFooter>
           <AlertDialogCancel className="bg-primary-500 border-0 hover:bg-primary-600">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-primary-500 hover:bg-primary-600" onClick={deleteUserPost}>Confirm</AlertDialogAction>
+          <AlertDialogAction className="bg-red" onClick={deleteUserPost}>Confirm</AlertDialogAction>
       </AlertDialogFooter>
   </AlertDialogContent>
   </AlertDialog>

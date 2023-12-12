@@ -51,12 +51,14 @@ const AllUsers = () => {
 
   return (
     <div className='explore-container'>
-        <div className="w-full md:px-20">
-        <div className="flex gap-2 justify-center items-center ">
-        <User width={36} height={36} />
+        <div className="w-full">
+        <div className="flex gap-2 justify-center items-center pb-10">
+        <img src='/assets/icons/people.svg' width={36} height={36} />
         <h2 className="h3-bold md:h2-bold md:w-full">Social Circle Users</h2>
         </div>
-      <hr className="line-break" />
+        <div className='w-full'>
+            <hr className="line-break" />
+        </div>
       </div>
       <div className="explore-inner_container">
         <h2 className="h3-bold md:h2-bold w-full">Search Users</h2>

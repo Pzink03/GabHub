@@ -13,8 +13,8 @@ const EditPost = () => {
     <div className='flex flex-1'>
         <div className='common-container'>
             <div className='max-w-5xl flex-start gap-3 justify-start w-full'>
-                <img
-                src='/assets/icons/add-post.svg'
+            <img
+                src='/assets/icons/gallery-add.svg'
                 width={36}
                 height={36}
                 alt='add'

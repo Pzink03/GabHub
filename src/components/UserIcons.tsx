@@ -19,7 +19,7 @@ const UserIcons = ({user}: UserProps) => {
             <Link to={`/profile/${user?.$id}`}>
               <img
                 src={user?.imageUrl}
-                className='w-12 h-12 md:w-20 md:h-20 object-cover whitespace-nowrap rounded-full border-4 border-primary-500 p-1'
+                className='w-12 h-12 md:w-20 md:h-20 object-cover object-top whitespace-nowrap rounded-full border-4 border-primary-500 p-1'
                 alt='users'
               />
               </Link>
