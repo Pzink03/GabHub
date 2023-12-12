@@ -1,34 +1,53 @@
+
+import GridUsersList from '@/components/GridUserList';
 import Loading from '@/components/Loading'
-import { useGetUsers } from '@/lib/react-query/queriesAndMutations'
+import useDebounce from '@/hooks/useDebounce';
+import { useGetInfiniteUsers, useSearchUsers } from '@/lib/react-query/queriesAndMutations'
 import { User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useInView } from 'react-intersection-observer';
 
+export type SearchResultProps = {
+  isSearchFetching: boolean;
+  searchedUsers: any;
+};
 
-interface StabBlockProps {
-  value: string | number;
-  label: string;
-}
-
-const StatBlock = ({ value, label }: StabBlockProps) => (
-  <div className="flex-center gap-2">
-    <p className="small-semibold lg:body-bold text-primary-500">{value}</p>
-    <p className="small-medium lg:base-medium text-light-2">{label}</p>
-  </div>
-);
+const SearchResults = ({ isSearchFetching, searchedUsers }: SearchResultProps) => {
+  if (isSearchFetching) {
+    return <Loading />;
+  } else if (searchedUsers && searchedUsers.documents.length > 0) {
+    return <GridUsersList users={searchedUsers.documents} />;
+  } else {
+    return (
+      <p className="text-light-4 mt-10 text-center w-full">No results found</p>
+    );
+  }
+};
 
 const AllUsers = () => {
-  const {data: users, isPending: isLoading} = useGetUsers()
+  const { ref, inView } = useInView();
+  const { data: users, fetchNextPage, hasNextPage } = useGetInfiniteUsers();
 
-  console.log(users)
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+  const { data: searchedUsers, isFetching: isSearchFetching } = useSearchUsers(debouncedSearch);
 
-  if(isLoading){
+  useEffect(() => {
+    if (inView && !searchValue) {
+      fetchNextPage();
+    }
+  }, [inView, searchValue]);
+
+  if(!users)
     return(
       <div className="flex-center w-full h-full">
         <Loading />
       </div>
     )
-  }
 
-
+  const shouldShowSearchResults = searchValue !== "";
+  const shouldShowUsers = !shouldShowSearchResults &&
+    users.pages.every((item) => item.documents.length === 0);
 
   return (
     <div className='explore-container'>
@@ -39,36 +58,51 @@ const AllUsers = () => {
         </div>
       <hr className="line-break" />
       </div>
+      <div className="explore-inner_container">
+        <h2 className="h3-bold md:h2-bold w-full">Search Users</h2>
+        <div className="flex gap-1 pl-2 mb-10 w-full rounded-lg bg-light-2">
+          <img
+            src="/assets/icons/search.svg"
+            width={24}
+            height={24}
+            alt="search"
+          />
+          <input
+            type="text"
+            placeholder="Search"
+            className="explore-search p-2"
+            value={searchValue}
+            onChange={(e) => {
+              const { value } = e.target;
+              setSearchValue(value);
+            }}
+          />
+        </div>
+      </div>
         <div className='explore-inner_container'>
-            <div >
-              <ul className='grid-container'>
-                {users?.documents.map((user, index) => (
-                  <li key={index} className='min-w-80 flex flex-col justify-center items-center gap-2 bg-dark-4 border-dark-4 rounded p-10'>
-                    <img
-                    src={user.imageUrl}
-                    className='h-20 w-20 rounded-full object-cover object-top'
-                    alt='user'
-                    />
-                    <h1 className="text-center md:text-xl w-full font-bold mt-2">
-                        {user.name}
-                    </h1>
-                    <p className="small-regular md:body-medium text-light-3 text-center">
-                      @{user.username}
-                    </p>
-                    <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">
-              <StatBlock value={user.posts.length} label="Posts" />
-              <StatBlock value={user.liked.length} label="Liked Posts" />
 
-            </div>
 
-                  </li>
+              {shouldShowSearchResults ? (
+          <SearchResults
+            isSearchFetching={isSearchFetching}
+            searchedUsers={searchedUsers}
+          />
+        ) : shouldShowUsers ? (
+          <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
+        ) : (
+                users.pages.map((item, index) => (
+                  <GridUsersList key={`page-${index}`} users={item.documents} />
 
-                ))}
+        )))}
 
-              </ul>
+              {hasNextPage && !searchValue && (
+        <div ref={ref} className="mt-10">
+          <Loading />
+        </div>
+      )}
             </div>
         </div>
-    </div>
+
   )
 }
 

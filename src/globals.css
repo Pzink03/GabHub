@@ -86,13 +86,17 @@ margin-bottom: 90px;
 background: linear-gradient(to right, white, #8B5CF6)
 }
 
+.line-break.sidebar {
+  margin-bottom: 0;
+  margin-top: 0
+}
 @layer base {
   * {
     @apply box-border list-none p-0 m-0 scroll-smooth;
   }
 
   body {
-    @apply bg-dark-1 text-white min-h-screen font-inter;
+    @apply bg-light-1 text-dark-1 min-h-screen font-inter;
   }
 }
 
@@ -216,7 +220,7 @@ background: linear-gradient(to right, white, #8B5CF6)
   }
 
   .explore-search {
-    @apply h-12 bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-0 focus-visible:ring-offset-0 ring-offset-0 !important;
+    @apply h-12 bg-white border rounded border-primary-500 w-full placeholder:text-light-4 focus:outline-none focus:border-primary-600 focus:shadow-md !important;
   }
 
   /* Home */
@@ -304,16 +308,16 @@ background: linear-gradient(to right, white, #8B5CF6)
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-light-1 border-r-4;
   }
 
   .leftsidebar-link {
-    @apply rounded-lg base-medium hover:bg-primary-500 transition;
+    @apply base-medium transition;
   }
 
   /* Post Card */
   .post-card {
-    @apply bg-dark-2 rounded-3xl border border-dark-4 p-5 lg:p-7 w-full max-w-screen-sm;
+    @apply bg-light-1 rounded-3xl border border-primary-500 p-5 lg:p-7 w-full max-w-screen-sm;
   }
 
   .post-card_img {
@@ -322,7 +326,7 @@ background: linear-gradient(to right, white, #8B5CF6)
 
   /* Topbar */
   .topbar {
-    @apply sticky top-0 z-50 md:hidden bg-dark-2 w-full;
+    @apply sticky top-0 z-50 md:hidden bg-light-2 w-full;
   }
 
   /* User card */
@@ -343,11 +347,11 @@ background: linear-gradient(to right, white, #8B5CF6)
   }
 
   .shad-input {
-    @apply h-12 bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
+    @apply h-12 bg-light-2 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
   }
 
   .shad-textarea {
-    @apply h-36 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
+    @apply h-36 bg-light-2  rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
   }
 
   /* Button */
@@ -356,10 +360,10 @@ background: linear-gradient(to right, white, #8B5CF6)
   }
 
   .shad-button_dark_4 {
-    @apply h-12 bg-dark-4 px-5 text-light-1 flex gap-2 !important;
+    @apply h-12 bg-light-3 px-5 text-light-1 flex gap-2 !important;
   }
 
   .shad-button_ghost {
-    @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
+    @apply flex gap-4 items-center justify-start hover:text-white hover:invert-white  !important;
   }
 }

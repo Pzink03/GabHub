@@ -12,8 +12,8 @@ const UserIcons = ({user}: UserProps) => {
   return (
 
 <>
-        <div className="flex flex-col items-center justify-center transition-transform">
-              <p className="font-bold text-light-1 text-center line-clamp-1">
+        <div className="flex flex-col gap-2 items-center justify-center transition-transform">
+              <p className="font-bold text-dark-4 text-center line-clamp-1">
               {user?.name}
             </p>
             <Link to={`/profile/${user?.$id}`}>
@@ -25,7 +25,7 @@ const UserIcons = ({user}: UserProps) => {
               </Link>
 
 
-        <p className='text-light-3 mt-2 md:w-40 w-20 overflow-hidden text-ellipsis'>
+        <p className='text-light-3 mt-2 md:w-40 w-20 overflow-hidden text-ellipsis pb-2'>
             @{user?.username}
         </p>
         </div>

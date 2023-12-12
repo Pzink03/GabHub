@@ -34,9 +34,9 @@ const Home = () => {
       return (
         <>
       <div className="home-container">
-        <div className="top-user-container w-full">
-          {/* <h3 className='h3-bold md:h2-bold text-left w-full'>Other Social Circle users</h3> */}
-            <div className="w-full rounded-lg bg-dark-2 border-primary-500">
+        <div className="top-user-container">
+
+            <div className="w-full rounded-lg border border-primary-500">
                 {isUserLoading && !creators ? (
                   <div className='w-full h-full flex justify-center'>
                     <Loading/>

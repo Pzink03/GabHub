@@ -428,29 +428,15 @@ export async function getInfinitePosts({
     }
   }
 
-export async function searchPosts(searchTerm: string) {
-    try {
-        const posts = await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.postCollectionId,
-            [Query.search('caption', searchTerm)]
-        )
 
-        if(!posts) throw Error
-        return posts
-    } catch(error) {
-        console.log(error)
-    }
 
-}
-
-export async function getUserPosts(userId?: string) {
+  export async function getUserPosts(userId?: string) {
     if(!userId) return
 
     try {
-        const posts = await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.postCollectionId,
+      const posts = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.postCollectionId,
             [Query.equal("creator", userId), Query.orderDesc("$createdAt")]
         )
 
@@ -557,6 +543,66 @@ export async function getUsers(limit?: number) {
 
   } catch(error) {
     console.log(error)
+  }
+
+}
+
+export async function getInfiniteUsers({
+    pageParam,
+  }: {
+    pageParam: number;
+  }) {
+    const queries: any[] = [
+      Query.orderDesc('$createdAt'),
+      Query.limit(20),
+    ];
+
+    if (pageParam) {
+      queries.push(Query.cursorAfter(pageParam.toString()));
+    }
+
+    try {
+      const users = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+        queries
+      );
+
+      if (!users) throw new Error('No data received.');
+
+      return users; // Return the posts data here
+    } catch (error) {
+      console.error(error); // Re-throw the error to handle it later
+    }
+  }
+
+  export async function searchUsers(searchTerm: string) {
+    try {
+        const users = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            [Query.search('name', searchTerm)],
+        )
+
+        if(!users) throw Error
+        return users
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+export async function searchPosts(searchTerm: string) {
+  try {
+      const posts = await databases.listDocuments(
+          appwriteConfig.databaseId,
+          appwriteConfig.postCollectionId,
+          [Query.search('caption', searchTerm)]
+      )
+
+      if(!posts) throw Error
+      return posts
+  } catch(error) {
+      console.log(error)
   }
 
 }
