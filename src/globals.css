@@ -250,7 +250,7 @@ background: linear-gradient(to right, white, #8B5CF6)
   }
 
   .post_details-img {
-    @apply h-80 lg:h-[480px] xl:w-[48%] lg:border-b-0 border-b-2 md:border-r-2 rounded-t-[30px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-light-1;
+    @apply h-80 lg:h-[480px] xl:w-[48%] lg:border-b-0 border-b-2 md:border-r-2 rounded-t-[30px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover object-top p-2 bg-light-1;
   }
 
   .post_details-info {

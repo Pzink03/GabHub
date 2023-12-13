@@ -3,7 +3,6 @@ import GridUsersList from '@/components/GridUserList';
 import Loading from '@/components/Loading'
 import useDebounce from '@/hooks/useDebounce';
 import { useGetInfiniteUsers, useSearchUsers } from '@/lib/react-query/queriesAndMutations'
-import { User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from 'react-intersection-observer';
 

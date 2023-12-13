@@ -3,23 +3,20 @@ import { Button } from "./Button"
 import { useSignOutAccount } from "../lib/react-query/queriesAndMutations"
 import { useEffect } from 'react'
 import { useUserContext } from "../context/AuthContext"
-import { sidebarLinks } from "../constants"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { useTheme } from "@/hooks/useTheme"
+import { THEME_OPTIONS } from "@/context/ThemeProvier"
 
 
 
 const Navbar = () => {
 
-    const { mutate: signOut, isSuccess } = useSignOutAccount()
-    const navigate = useNavigate()
-    const { user } = useUserContext()
+    const { mutate: signOut } = useSignOutAccount()
 
-    useEffect(() => {
-        if (isSuccess) {
-            navigate('sign-in')
 
-        }
-    }, [isSuccess])
-    console.log(sidebarLinks)
+
+
+
   return (
     <div className='topbar'>
         <div className="flex-between py-4 px-5">
@@ -38,18 +35,67 @@ const Navbar = () => {
                     alt="logout"
                     />
                 </Button>
-                <Link to={`/profile/${user.id}`} className="flex-center gap-3" >
-                    <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
-                    alt="profile"
-                    className="h-8 w-8 rounded-full"/>
-
-                </Link>
+                <ThemeToggleButton/>
 
             </div>
         </div>
 
     </div>
   )
+}
+
+function ThemeToggleButton(){
+    const { user } = useUserContext()
+    const { mutate: signOut, isSuccess } = useSignOutAccount()
+    const { setTheme } = useTheme()
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (isSuccess) {
+            navigate('sign-in')
+
+        }
+    }, [isSuccess])
+
+    return (
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+          <Link to={`/profile/${user.id}`} className="flex-center gap-3" >
+                    <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
+                    alt="profile"
+                    className="h-8 w-8 rounded-full"/>
+
+                </Link>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                <Link to={`/profile/${user.id}`} className="flex-center gap-3" >
+                    Profile
+                </Link>
+                </DropdownMenuItem>
+                {THEME_OPTIONS.map(theme => (
+                    <DropdownMenuItem
+                    key={theme}
+                    onClick={() => setTheme(theme)}
+                    >{theme}
+
+                    </DropdownMenuItem>
+
+                ))}
+                <DropdownMenuItem>
+                <Button variant='ghost' className="shad-button_ghost" onClick={() => signOut()}>
+                    Logout
+                    <img
+                    src="/assets/icons/logout.svg"
+                    alt="logout"
+                    />
+
+                </Button>
+                </DropdownMenuItem>
+          </DropdownMenuContent>
+
+
+        </DropdownMenu>
+      )
 }
 
 export default Navbar
