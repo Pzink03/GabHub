@@ -2,7 +2,6 @@ import GridPostList from "@/components/GridPostList";
 import Loading from "@/components/Loading";
 import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
-import { User } from "lucide-react";
 
 
 const Saved = () => {
