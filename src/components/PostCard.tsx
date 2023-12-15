@@ -17,7 +17,7 @@ const PostCard = ({ post }: PostCardProps) => {
   return (
     <div className='post-card'>
         <div className='flex-between'>
-            <div className='flex items-center gap-3'>
+            <div className='flex items-center gap-3 px-2'>
                 <Link to={`/profile/${post.creator.$id}`}>
                     <img
                     src={post?.creator?.imageUrl || '/assets/icons/profile-placeholder.svg'}
@@ -26,8 +26,8 @@ const PostCard = ({ post }: PostCardProps) => {
                     />
                 </Link>
 
-                <div className='flex flex-col'>
-                    <p className='base-medium lg:body-bold text-dark-1'>
+                <div className='flex flex-col '>
+                    <p className='base-medium lg:body-bold text-dark-1 dark:text-white'>
                         {post.creator.name}
                     </p>
                     <div className='flex-center gap-2 text-light-3'>
@@ -41,12 +41,22 @@ const PostCard = ({ post }: PostCardProps) => {
                     </div>
                 </div>
             </div>
-            <Link to={`/update-post/${post.$id}`} className={`${user.id !== post.creator.$id && 'hidden'}`}>
-                <img src='/assets/icons/edit.svg' alt='edit' width={20} height={20}/>
-            </Link>
+            <Link to={`/update-post/${post.$id}`} className={` h-12 bg-light-2 dark:bg-dark-4 m-2 dark:text-white px-2 text-dark-4  flex-center gap-2 rounded-lg ${user.id !== post.creator.$id && 'hidden'}`}>
+                <img
+                  src={"/assets/icons/edit.svg"}
+                  alt="edit"
+                  width={20}
+                  height={20}
+                  className="hover:invert-white"
+                />
+                <p className="flex whitespace-nowrap small-medium">
+                  Edit Post
+                </p>
+              </Link>
+
         </div>
         <Link to={`/posts/${post.$id}`}>
-            <div className='small-medium lg:base-medium py-5'>
+            <div className='small-medium lg:base-medium py-5 px-2'>
                 <p>
                     {post.caption}
                 </p>
@@ -58,15 +68,22 @@ const PostCard = ({ post }: PostCardProps) => {
                     ))}
                 </ul>
             </div>
+            <div className='w-full'>
+            <hr className="line-break thin bg-zinc-800" />
+        </div>
 
             <img
             src={post.imageUrl || '/assets/icons/profile-placeholder.svg'}
             className='post-card_img'
             alt='post image'
             />
+            <div className='w-full'>
+            <hr className="line-break thin bg-zinc-800" />
+        </div>
         </Link>
-
-        <PostStats post={post} userId={user.id} />
+        <div className='p-2'>
+            <PostStats post={post} userId={user.id} />
+        </div>
     </div>
   )
 }

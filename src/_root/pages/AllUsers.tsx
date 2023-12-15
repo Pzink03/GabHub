@@ -53,15 +53,15 @@ const AllUsers = () => {
         <div className="w-full">
         <div className="flex gap-2 justify-center items-center pb-10">
         <img src='/assets/icons/people.svg' width={36} height={36} />
-        <h2 className="h3-bold md:h2-bold md:w-full">Social Circle Users</h2>
+        <h2 className="h3-bold md:h2-bold w-full dark:bg-gradient-to-r dark:from-white dark:to-primary-500 dark:text-transparent dark:bg-clip-text">Social Circle Users</h2>
         </div>
         <div className='w-full'>
-            <hr className="line-break" />
+            <hr className="line-break bg-gradient-to-r from-white to-primary-500 dark:bg-gradient-to-r dark:from-zinc-700 dark:to-zinc-700" />
         </div>
       </div>
       <div className="explore-inner_container">
-        <h2 className="h3-bold md:h2-bold w-full">Search Users</h2>
-        <div className="flex gap-1 pl-2 mb-10 w-full rounded-lg bg-light-2">
+        <h2 className="h3-bold md:h2-bold w-full dark:bg-gradient-to-r dark:from-white dark:to-primary-500 dark:text-transparent dark:bg-clip-text"> Search Users</h2>
+        <div className="flex gap-1 pl-2 mb-10 w-full rounded-lg bg-light-2 dark:bg-dark-4">
           <img
             src="/assets/icons/search.svg"
             width={24}

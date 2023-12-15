@@ -19,7 +19,7 @@ const EditPost = () => {
                 height={36}
                 alt='add'
                 />
-                <h2 className='h3-bold md:h2-bold text-left w-full'>Edit Post</h2>
+                <h2 className='h3-bold md:h2-bold w-full dark:bg-gradient-to-r dark:from-white dark:to-primary-600 dark:text-transparent dark:bg-clip-text'>Edit Post</h2>
             </div>
             <PostForm action="Update" post={post} />
         </div>

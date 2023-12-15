@@ -21,8 +21,11 @@ const UpdateProfile = () => {
                 height={36}
                 alt='add'
                 />
-                <h2 className='h3-bold md:h2-bold text-left w-full'>Edit Profile</h2>
+                <h2 className='h3-bold md:h2-bold w-full dark:bg-gradient-to-r dark:from-white dark:to-primary-500 dark:text-transparent dark:bg-clip-text'>Edit Profile</h2>
             </div>
+            <div className='w-full'>
+            <hr className="line-break bg-gradient-to-r from-white to-primary-500 dark:bg-gradient-to-r dark:from-zinc-700 dark:to-zinc-700" />
+        </div>
             <UpdateProfileForm />
         </div>
     </div>

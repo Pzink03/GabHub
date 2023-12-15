@@ -1,9 +1,11 @@
 import { Link, useNavigate, NavLink, useLocation } from "react-router-dom"
-import { Button } from "./Button"
+
 import { useSignOutAccount } from "../lib/react-query/queriesAndMutations"
-import { useEffect } from 'react'
+import { useEffect} from 'react'
 import { useUserContext } from "../context/AuthContext"
 import { sidebarLinks } from "../constants"
+import { useTheme } from "@/hooks/useTheme"
+import { Button } from "./ui/button"
 
 
 const LeftSidebar = () => {
@@ -57,7 +59,7 @@ const LeftSidebar = () => {
                 </div>
             </Link>
             <div className='w-full'>
-            <hr className="line-break sidebar" />
+            <hr className="line-break sidebar bg-gradient-to-r from-white to-primary-500 dark:bg-gradient-to-r dark:from-zinc-700 dark:to-zinc-700" />
         </div>
 
             <ul className="flex flex-col gap-6">
@@ -65,15 +67,21 @@ const LeftSidebar = () => {
                         const isActive = pathname === link.route
 
                         return (
-                            <li key={link.label} className={`leftsidebar-link group ${isActive && ` text-white rounded bg-primary-500`}`}>
-                            <NavLink to={link.route} className={`flex gap-4 items-center p-4 hover:border-b-4 ${isActive && `hover:border-none`} hover:border-primary-500 hover:transition transition-transform ease-in-out`}>
+                            <li key={link.label} className={`leftsidebar-link group relative ${isActive && ` text-white rounded bg-primary-500`}`}>
+                            {!isActive && <span className="absolute -bottom-1 left-0 w-0 h-1 bg-primary-500 transition-all group-hover:w-full"></span>}
+                            <NavLink to={link.route} className={`flex gap-4 items-center p-4 ${isActive && `hover:border-none`}`}>
+
                                 <img src={link.imgURL} alt={link.label} className={`${isActive && `invert-white`}`} />
                                 {link.label}
                             </NavLink>
                             </li>
                         )
                     })}
+
+                    <ThemeToggleButton />
+
                 </ul>
+
 
         </div>
         <div className="hover:bg-primary-500 rounded hover:transition transition-transform ease-in-out">
@@ -83,24 +91,33 @@ const LeftSidebar = () => {
                 Logout
             </p>
         </Button>
-        </div>
-        {/* <div className="flex flex-col gap-6 ">
-        <Button className="leftsidebar-link" onClick={() => signOut()}>
-            <div className=" hover:invert-white flex gap-4 items-center p-4">
-                    <img
-                    src="assets/icons/logout.svg"
-                    alt="logout"
-                    className=""
-                    />
-                    <p className="flex flex-center items-center">
-                        Logout
 
-                    </p>
-            </div>
-        </Button>
-        </div> */}
+        </div>
     </nav>
   )
 }
 
 export default LeftSidebar
+
+function ThemeToggleButton() {
+    const { theme, setTheme } = useTheme()
+
+    function toggleTheme(){
+        setTheme(theme === "light" ? 'dark' : 'light')
+
+    }
+    return (
+        <div className="flex justify-start">
+          <Button
+          onClick={toggleTheme}
+        variant="ghost"
+            className="data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800"
+          >
+            <div className="flex w-10 h-5 bg-primary-500 dark:bg-dark-4 rounded-full">
+                <span className={`h-5 w-5 rounded-full shadow-lg bg-white transition-all duration-500 dark:ml-5 dark:bg-primary-500` }></span>
+            </div>
+          </Button>
+          <p className="flex items-center base-medium">Dark Mode</p>
+          </div>
+    )
+  }

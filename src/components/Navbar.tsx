@@ -35,7 +35,7 @@ const Navbar = () => {
                     alt="logout"
                     />
                 </Button>
-                <ThemeToggleButton/>
+                <ThemeToggleDropdown/>
 
             </div>
         </div>
@@ -44,7 +44,7 @@ const Navbar = () => {
   )
 }
 
-function ThemeToggleButton(){
+function ThemeToggleDropdown(){
     const { user } = useUserContext()
     const { mutate: signOut, isSuccess } = useSignOutAccount()
     const { setTheme } = useTheme()

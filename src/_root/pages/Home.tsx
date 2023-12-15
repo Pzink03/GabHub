@@ -53,11 +53,11 @@ const Home = () => {
 
             </div>
         </div>
+              <h2 className="h3-bold md:h2-bold text-center w-full dark:bg-gradient-to-r dark:from-white dark:to-primary-500 dark:text-transparent dark:bg-clip-text">Home Feed</h2>
         <div className='w-full'>
-            <hr className="line-break" />
+            <hr className="line-break bg-gradient-to-r from-white to-primary-500 dark:bg-gradient-to-r dark:from-zinc-700 dark:to-zinc-700" />
         </div>
             <div className="home-posts">
-              <h2 className="h3-bold md:h2-bold text-center w-full dark:text-white">Home Feed</h2>
               {isPostLoading && !posts ? (
                 <Loading />
               ) : (
