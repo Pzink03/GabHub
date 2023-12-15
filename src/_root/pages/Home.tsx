@@ -36,7 +36,7 @@ const Home = () => {
       <div className="home-container">
         <div className="top-user-container">
 
-            <div className="w-full rounded-lg border border-primary-500">
+            <div className="w-full rounded-lg border dark:bg-dark-3 border-primary-500">
                 {isUserLoading && !creators ? (
                   <div className='w-full h-full flex justify-center'>
                     <Loading/>

@@ -41,18 +41,21 @@ const PostCard = ({ post }: PostCardProps) => {
                     </div>
                 </div>
             </div>
-            <Link to={`/update-post/${post.$id}`} className={` h-12 bg-light-2 dark:bg-dark-4 m-2 dark:text-white px-2 text-dark-4  flex-center gap-2 rounded-lg ${user.id !== post.creator.$id && 'hidden'}`}>
+
+            <Link to={`/update-post/${post.$id}`} className={`  ${user.id !== post.creator.$id ? 'hidden' : `h-12 bg-light-2 dark:bg-dark-4 m-2 dark:text-white px-2 text-dark-4  flex-center gap-2 rounded-lg`}`}>
+                <div className="hover:invert-white"></div>
                 <img
                   src={"/assets/icons/edit.svg"}
                   alt="edit"
                   width={20}
                   height={20}
-                  className="hover:invert-white"
+
                 />
                 <p className="flex whitespace-nowrap small-medium">
                   Edit Post
                 </p>
               </Link>
+
 
         </div>
         <Link to={`/posts/${post.$id}`}>

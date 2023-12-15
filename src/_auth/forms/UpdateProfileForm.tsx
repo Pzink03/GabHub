@@ -1,42 +1,38 @@
-import React, { useState } from "react";
 import { Button } from "../../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
 import { useGetUserById, useUpdateProfile } from "@/lib/react-query/queriesAndMutations";
 import Loading from "@/components/Loading";
 import ProfilePictureFileUploader from "@/_root/pages/ProfilePictureFileUploader";
+import { useToast } from "@/components/ui/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { ProfileValidationSchema } from "@/lib/validations";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
-
-
-
-export type IUpdateProfile = {
-    name: string;
-    file: File[];
-    username: string;
-    bio: string;
-  };
 
 function UpdateProfileForm() {
     const { id } = useParams();
-    const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [bio, setBio] = useState('');
+    const { toast } = useToast()
+    const { user, setUser } = useUserContext();
+    const navigate = useNavigate();
 
-    const [selectedFile, setSelectedFile] = useState<File[]>([]);
     const { mutateAsync: updateProfile, isPending: isLoadingUpdate } = useUpdateProfile();
     const { data: currentUser } = useGetUserById(id || '');
-    const { user, setUser } = useUserContext();
-    const values: IUpdateProfile = {
-    name: name,
-    file: selectedFile,
-    username: username,
-    bio: bio
-  };
 
-
-
-  const navigate = useNavigate();
+  const form = useForm<z.infer<typeof ProfileValidationSchema>>({
+    resolver: zodResolver(ProfileValidationSchema),
+    defaultValues: {
+      file: [],
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      bio: user.bio || ""
+    }
+  })
 
   if (!currentUser)
   return (
@@ -45,119 +41,130 @@ function UpdateProfileForm() {
     </div>
   );
 
-
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    if(!currentUser) {
-        console.error("current user is undefined:")
-        return
-    }
-
-
-      const updatedProfile = await updateProfile({
-        ...values,
-        userId: currentUser.$id,
-        name: name,
-        username: username,
-        email: email,
-        bio: bio,
-        file: selectedFile,
-
-        imageId: currentUser?.imageId,
-        imageUrl: currentUser?.imageUrl
+  const handleUpdate = async (value: z.infer<typeof ProfileValidationSchema>) => {
+    const updateUser = await updateProfile({
+      userId: currentUser.$id,
+      name: value.name,
+      username: value.username,
+      bio: value.bio,
+      file: value.file,
+      email: value.email,
+      imageUrl: currentUser.imageUrl,
+      imageId: currentUser.imageId,
+    })
+    if(!updateUser){
+      toast({
+        title:"Update user failed. Please try again.",
       })
-
-
-    // Validate form data, and prevent form submission if needed
-    if (!updatedProfile) {
-      alert("Please provide a caption and select an image.");
-      return;
     }
 
-    // const formData = new FormData();
-    // formData.append("file", selectedFile);
-    // formData.append("caption", caption);
-    // formData.append("location", location);
-    // formData.append("tags", tags);
-    // formData.append("userId", user.id);
+    setUser({
+      ...user,
+      name: updateUser?.name,
+      bio: updateUser?.bio,
+      imageUrl: updateUser?.imageUrl,
+    })
 
-
-
-        setUser({
-            ...user,
-            name: updatedProfile?.name,
-            bio: updatedProfile?.bio,
-            imageUrl: updatedProfile?.imageUrl
-
-        })
-        // Reset form fields and navigate to a different page (e.g., home)
-        navigate(`/profile/${id}`); // Change the destination route accordingly
-        // Handle the error (e.g., display an error message to the user)
+    return navigate(`/profile/${id}`)
   }
 
+
   return (
-      <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full max-w-5xl">
-        <ProfilePictureFileUploader
-          fieldChange={(file) => setSelectedFile(file)}
-          mediaUrl={selectedFile.length > 0 ? URL.createObjectURL(selectedFile[0]) : currentUser?.imageUrl}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleUpdate)} className="flex flex-col gap-6 w-full max-w-5xl">
+        <FormField
+        control={form.control}
+        name="file"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+
+            <ProfilePictureFileUploader
+              fieldChange={field.onChange}
+              mediaUrl={currentUser.imageUrl}
+            />
+            </FormControl>
+            <FormMessage className="shad-form_message" />
+          </FormItem>
+
+        )}
         />
-      <label className="shad-form_label" htmlFor="bio">
-        Name
-      </label>
-      <input
-        className="shad-input"
-        id='name'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <label className="shad-form_label" htmlFor="name">
-        Bio
-      </label>
-      <textarea
-        className="shad-textarea shad-input custom-scrollbar full-width-textarea"
-        id="bio"
-        value={bio}
-        placeholder="Write a bio"
-        onChange={(e) => setBio(e.target.value)}
-      />
-      <label className="shad-form_label" htmlFor="file">
 
-      </label>
-      <label className="shad-form_label" htmlFor="username">
-        Username
-      </label>
-      <input
-        className="shad-input"
-        type="text"
-        id="username"
+        <FormField
+        control={form.control}
+        name="name"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="shad-form_label">Name</FormLabel>
+            <FormControl>
 
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+            <Input type="text" className="shad-input" {...field} />
+            </FormControl>
+            <FormMessage className="shad-form_message" />
+          </FormItem>
 
-      <label className="shad-form_label" htmlFor="email">
-        Email
-      </label>
-      <textarea
-        className="shad-input"
-        id="email"
+        )}
+        />
+        <FormField
+        control={form.control}
+        name="username"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="shad-form_label">Username</FormLabel>
+            <FormControl>
+            <Input type="text" className="shad-input" {...field} />
+            </FormControl>
+            <FormMessage className="shad-form_message" />
+          </FormItem>
 
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <div className="flex gap-4 items-center justify-center">
-      <Button
+        )}
+        />
+
+        <FormField
+        control={form.control}
+        name="email"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="shad-form_label">Email</FormLabel>
+            <FormControl>
+
+            <Input type="text" className="shad-input" {...field} disabled />
+            </FormControl>
+            <FormMessage className="shad-form_message" />
+          </FormItem>
+
+        )}
+        />
+
+        <FormField
+        control={form.control}
+        name="bio"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="shad-form_label">Bio</FormLabel>
+            <FormControl>
+
+            <Textarea className="shad-textarea custom-scrollbar" {...field} />
+            </FormControl>
+            <FormMessage className="shad-form_message" />
+          </FormItem>
+
+        )}
+        />
+        <div className="flex gap-4 items-center justify-center">
+          <Button
             type="button"
             className="shad-button_dark_4"
-            onClick={() => navigate(-1)}>
+            onClick={() => navigate(-1)}
+            >
             Cancel
           </Button>
-        <Button className="shad-button_primary whitespace-nowrap" type="submit" disabled={isLoadingUpdate}>
-          Submit{isLoadingUpdate && 'Loading...'}
-        </Button>
-      </div>
-    </form>
+            <Button className="shad-button_primary whitespace-nowrap" type="submit" disabled={isLoadingUpdate}>
+              Update Profile{isLoadingUpdate && 'Loading...'}
+            </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
 

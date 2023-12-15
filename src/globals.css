@@ -286,7 +286,7 @@ margin-bottom: 20px;
 
   /* Bottom bar */
   .bottom-bar {
-    @apply z-50 flex-between w-full sticky bottom-0 border-t shadow-lg bg-light-1 px-5 py-4 md:hidden;
+    @apply z-50 flex-between w-full sticky bottom-0 border-t rounded shadow-lg bg-light-1 dark:bg-dark-1 dark:border-zinc-700 px-5 py-4 md:hidden;
   }
 
   /* File uploader */
@@ -335,7 +335,7 @@ margin-bottom: 20px;
 
   /* Topbar */
   .topbar {
-    @apply sticky top-0 z-50 md:hidden dark:bg-dark-2 bg-white w-full border-b-2;
+    @apply sticky top-0 z-50 md:hidden dark:bg-dark-2 bg-white w-full border-b-2 dark:border-zinc-700;
   }
 
   /* User card */

@@ -13,7 +13,7 @@ const UserIcons = ({user}: UserProps) => {
 
 <>
         <div className="flex flex-col gap-2 items-center justify-center transition-transform">
-              <p className="font-bold text-dark-4 text-center line-clamp-1">
+              <p className="font-bold text-dark-4 dark:text-white text-center line-clamp-1 pt-2">
               {user?.name}
             </p>
             <Link to={`/profile/${user?.$id}`}>
