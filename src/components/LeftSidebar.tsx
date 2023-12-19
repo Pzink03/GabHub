@@ -1,11 +1,12 @@
 import { Link, useNavigate, NavLink, useLocation } from "react-router-dom"
 
 import { useSignOutAccount } from "../lib/react-query/queriesAndMutations"
-import { useEffect} from 'react'
+import { ComponentProps, useEffect} from 'react'
 import { useUserContext } from "../context/AuthContext"
 import { sidebarLinks } from "../constants"
 import { useTheme } from "@/hooks/useTheme"
 import { Button } from "./ui/button"
+import { cn } from "@/lib/utils"
 
 
 const LeftSidebar = () => {
@@ -36,10 +37,10 @@ const LeftSidebar = () => {
         <div className='flex flex-col gap-11'>
             <Link to='/' className='flex gap-3 items-center'>
                 <img
-                src='/assets/images/logo.svg'
+                src='/assets/images/logolg.svg'
                 alt='logo'
                 width={300}
-                height={36}
+                height={300}
                 />
             </Link>
 
@@ -99,7 +100,9 @@ const LeftSidebar = () => {
 
 export default LeftSidebar
 
-function ThemeToggleButton() {
+type JobListingGridProps = ComponentProps<"div">
+
+export function ThemeToggleButton({className}: JobListingGridProps ) {
     const { theme, setTheme } = useTheme()
 
     function toggleTheme(){
@@ -111,10 +114,10 @@ function ThemeToggleButton() {
           <Button
           onClick={toggleTheme}
         variant="ghost"
-            className="data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800"
+            className="data-[state=open]:bg-slate-100 px-2 dark:data-[state=open]:bg-slate-800"
           >
-            <div className="flex w-10 h-5 bg-primary-500 dark:bg-dark-4 rounded-full">
-                <span className={`h-5 w-5 rounded-full shadow-lg bg-white transition-all duration-500 dark:ml-5 dark:bg-primary-500` }></span>
+            <div className={"flex bg-primary-500 px-0 p-0 dark:bg-dark-4 rounded-full"}>
+                <span className={cn(`h-5 w-5 rounded-full px-0 p-0 shadow-lg bg-white transition-all duration-500 dark:ml-5 mr-5 dark:mr-0 dark:bg-primary-500`, className) }></span>
             </div>
           </Button>
           <p className="flex items-center base-medium">Dark Mode</p>

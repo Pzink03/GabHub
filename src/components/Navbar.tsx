@@ -3,20 +3,13 @@ import { Button } from "./Button"
 import { useSignOutAccount } from "../lib/react-query/queriesAndMutations"
 import { useEffect } from 'react'
 import { useUserContext } from "../context/AuthContext"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { useTheme } from "@/hooks/useTheme"
-import { THEME_OPTIONS } from "@/context/ThemeProvier"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { ThemeToggleButton } from "./LeftSidebar"
+import { cn } from "@/lib/utils"
 
 
 
 const Navbar = () => {
-
-    const { mutate: signOut } = useSignOutAccount()
-
-
-
-
-
   return (
     <div className='topbar'>
         <div className="flex-between py-4 px-5">
@@ -26,18 +19,10 @@ const Navbar = () => {
             alt="logo"
             width={230}
             height={325} />
-
             </Link>
-            <div className="flex gap-4">
-                <Button variant='ghost' className="shad-button_ghost" onClick={() => signOut()}>
-                    <img
-                    src="/assets/icons/logout.svg"
-                    alt="logout"
-                    />
-                </Button>
                 <ThemeToggleDropdown/>
 
-            </div>
+
         </div>
 
     </div>
@@ -47,7 +32,6 @@ const Navbar = () => {
 function ThemeToggleDropdown(){
     const { user } = useUserContext()
     const { mutate: signOut, isSuccess } = useSignOutAccount()
-    const { setTheme } = useTheme()
     const navigate = useNavigate()
     useEffect(() => {
         if (isSuccess) {
@@ -62,32 +46,36 @@ function ThemeToggleDropdown(){
           <Link to={`/profile/${user.id}`} className="flex-center gap-3" >
                     <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
                     alt="profile"
-                    className="h-8 w-8 rounded-full"/>
+                    className="h-12 w-12 rounded-full object-cover object-top"/>
 
                 </Link>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                <Link to={`/profile/${user.id}`} className="flex-center gap-3" >
+                <Link to={`/profile/${user.id}`} className="flex gap-4 text-lg px-2 w-full " >
+                <img
+                    src="/assets/icons/people.svg"
+                    alt="logout"
+                    />
                     Profile
                 </Link>
                 </DropdownMenuItem>
-                {THEME_OPTIONS.map(theme => (
-                    <DropdownMenuItem
-                    key={theme}
-                    onClick={() => setTheme(theme)}
-                    >{theme}
+
+                    <DropdownMenuItem>
+                    <ThemeToggleButton className={cn("h-4 w-4 px-0")} />
 
                     </DropdownMenuItem>
-
-                ))}
+                    <DropdownMenuSeparator />
                 <DropdownMenuItem>
                 <Button variant='ghost' className="shad-button_ghost" onClick={() => signOut()}>
-                    Logout
                     <img
                     src="/assets/icons/logout.svg"
                     alt="logout"
                     />
+                    <p className="text-lg">
+
+                    Logout
+                    </p>
 
                 </Button>
                 </DropdownMenuItem>
