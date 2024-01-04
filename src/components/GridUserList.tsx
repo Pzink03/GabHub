@@ -17,7 +17,7 @@ const StatBlock = ({ value, label }: StabBlockProps) => (
   );
 
 const GridUsersList = ({ users }: GridUsersListProps) => {
-    console.log(users)
+
   return (
     <ul className='grid-container'>
         {users.map((user) => (
