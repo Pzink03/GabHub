@@ -1,27 +1,48 @@
-# React + TypeScript + Vite
+## GabHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Team:
+- Pete Zink
 
-Currently, two official plugins are available:
+GabHub - One stop for property managers and renters to manage their properties.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Design
 
-## Expanding the ESLint configuration
+Appwrite
+Wireframe
+API
+Schemas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Intended Market
 
-- Configure the top-level `parserOptions` property like this:
+Introducing "GabHub" - A new social media app allowing you to connect with friends and family.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+GabHub allows users to stay connected with each other through posting pictures and life updates
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## Functionality
+
+### Key Features
+-Visitors to the site will need to create an account to access the site. Returning users will have the option to login with their credentials
+-The homepage will show posts made by other GabHub users
+-Users will have the ability to toggle dark mode on and off
+-All forms have an implemented schema to allow users what information is required
+-The Explore page features infinite scroll as well as the ability to search for posts
+-The People page allows users to search for other GabHub users
+-Users have the ability to like and save posts by other users
+-The profile page will render all posts created by the logged in user as well as any posts the logged in user has liked
+
+## Project Initialization
+
+To fully enjoy this application on your local machine, please follow these steps:
+1. Fork repository at: https://github.com/Pzink03/GabHub
+2. Clone repository to local by running: git clone https://github.com/Pzink03/GabHub
+3. CD into the new project directory
+4. npm run dev
+
+## Live Demo
+
+Check out the live demo: https://gabhub.netlify.app
+
+
+## Maintainer
+@PZink03
