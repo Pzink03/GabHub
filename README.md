@@ -1,9 +1,6 @@
 ## GabHub
 
-Team:
-- Pete Zink
-
-GabHub - One stop for property managers and renters to manage their properties.
+A dynamic social media application where users can create, like, and save posts, fostering content sharing and user engagement. I decided to incorporate Appwrite for media storage, end-to-end backend server capabilities, easy to manage API creation, and increased authentication and security measures. This allowed me to execute comprehensive CRUD functionality, allowing users to manage their posts, liked content, saved posts, and additional multimedia within the application. For the styling I decided to use Tailwind as well as some custom CSS to handle certain Tailwind limitations. This allowed me to implement a fully responsive design.
 
 ## Design
 
